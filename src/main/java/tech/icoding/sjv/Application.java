@@ -26,15 +26,12 @@ import java.net.UnknownHostException;
 import java.util.Optional;
 
 @SpringBootApplication
-@EntityScan(basePackageClasses = {
-        AuthAppApplication.class,
-        Jsr310JpaConverters.class
-})
-public class AuthAppApplication {
-    private static final Logger logger = Logger.getLogger(AuthAppApplication.class);
+//@EntityScan(basePackageClasses = {Application.class, Jsr310JpaConverters.class})
+public class Application {
+    private static final Logger logger = Logger.getLogger(Application.class);
     public static void main(String[] args) throws UnknownHostException {
 
-        final ConfigurableApplicationContext application = SpringApplication.run(AuthAppApplication.class, args);
+        final ConfigurableApplicationContext application = SpringApplication.run(Application.class, args);
 
         Environment env = application.getEnvironment();
         String ip = InetAddress.getLocalHost().getHostAddress();
