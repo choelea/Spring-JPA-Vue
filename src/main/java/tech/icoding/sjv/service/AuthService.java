@@ -106,7 +106,9 @@ public class AuthService {
      */
     public Optional<Authentication> authenticateUser(LoginRequest loginRequest) {
         //TODO 先用 email 验证，再用 username 验证？
-        return Optional.ofNullable(authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),
+//        return Optional.ofNullable(authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),
+//                loginRequest.getPassword())));
+        return Optional.ofNullable(authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),
                 loginRequest.getPassword())));
     }
 
