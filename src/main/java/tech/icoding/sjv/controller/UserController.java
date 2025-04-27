@@ -40,10 +40,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
-@RestController
-@RequestMapping("/api/user")
-@Tag(name = "User Rest API", description = "Defines endpoints for the logged in user. It's secured by default")
-
+//@RestController
+//@RequestMapping("/api/user")
+//@Tag(name = "User Rest API", description = "Defines endpoints for the logged in user. It's secured by default")
 public class UserController {
 
     private static final Logger logger = Logger.getLogger(UserController.class);
@@ -54,7 +53,7 @@ public class UserController {
 
     private final ApplicationEventPublisher applicationEventPublisher;
 
-    @Autowired
+//    @Autowired
     public UserController(AuthService authService, UserService userService, ApplicationEventPublisher applicationEventPublisher) {
         this.authService = authService;
         this.userService = userService;

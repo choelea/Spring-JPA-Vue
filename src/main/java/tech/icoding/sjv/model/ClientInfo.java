@@ -5,32 +5,41 @@ import lombok.Data;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "biz_client_info")
 @Data
 public class ClientInfo {
 
+    @Transient
+    public String getServerAlias() {
+        return server.getAlias();
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /**
+     * 客户名
+     */
     @Column(name = "client_name", nullable = false)
     private String clientName;
 
     @Column(name = "version")
     private String version;
 
-    @Column(name = "dongle_number")
-    private String dongleNumber;
+    @Column(name = "port_number")
+    private String port;
 
     @Column(name = "annual_fee")
     private BigDecimal annualFee;
 
-    @Column(name = "expiry_date")
-    private LocalDate expiryDate;
+    @Column(name = "expiry_time")
+    private LocalDateTime expiryTime;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "server_id")
     private ServerInfo server;
 
@@ -46,5 +55,4 @@ public class ClientInfo {
         DISABLED
     }
 
-    // Getters and Setters
 }

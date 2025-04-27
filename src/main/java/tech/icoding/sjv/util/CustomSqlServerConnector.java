@@ -8,6 +8,7 @@ import java.sql.Statement;
 public class CustomSqlServerConnector {
 
     public static Connection createConnection(String ip, int port, String username, String password) throws SQLException {
+        DriverManager.setLoginTimeout(5);
         String url = String.format("jdbc:sqlserver://%s:%d;databaseName=A_CUSTOMER;encrypt=false;trustServerCertificate=true", ip, port);
         return DriverManager.getConnection(url, username, password);
     }

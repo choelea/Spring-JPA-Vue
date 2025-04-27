@@ -21,24 +21,27 @@ public class ServerInfo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /**
+     * 服务器别名
+     */
     @Column(name = "alias", nullable = false)
-    @NullOrNotBlank(message = "Login Username can be null but not blank")
+    @NullOrNotBlank(message = "别名不能为空")
     private String alias;
 
     @Column(name = "address", nullable = false)
-    @NullOrNotBlank(message = "Login Username can be null but not blank")
+    @NullOrNotBlank(message = "IP 地址不能为空")
     private String address;
 
     @Column(name = "port", nullable = false)
-    @NotNull(message = "Port cannot be null")
+    @NotNull(message = "端口好不能为空")
     private Integer port;
 
     @Column(name = "username")
-    @NullOrNotBlank(message = "Login Username can be null but not blank")
+    @NullOrNotBlank(message = "用户名不能为空")
     private String username;
 
     @Column(name = "password")
-    @NullOrNotBlank(message = "Login Username can be null but not blank")
+    @NullOrNotBlank(message = "密码不能为空")
     private String password;
 
     @OneToMany(mappedBy = "server", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)

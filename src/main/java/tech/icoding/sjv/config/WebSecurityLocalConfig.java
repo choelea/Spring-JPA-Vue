@@ -22,13 +22,13 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 
-@Profile("dev")
+@Profile("local")
 @Configuration
 @EnableWebSecurity(debug = true)
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class WebSecurityDevConfig extends WebSecurityConfigurerAdapter {
+public class WebSecurityLocalConfig extends WebSecurityConfigurerAdapter {
 
-    private static final Logger logger = Logger.getLogger(WebSecurityDevConfig.class);
+    private static final Logger logger = Logger.getLogger(WebSecurityLocalConfig.class);
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

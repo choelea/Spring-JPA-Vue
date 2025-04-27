@@ -49,14 +49,14 @@ import java.util.Locale;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice
-public class AuthControllerAdvice {
+public class ControllerAdvice {
 
-    private static final Logger logger = Logger.getLogger(AuthControllerAdvice.class);
+    private static final Logger logger = Logger.getLogger(ControllerAdvice.class);
 
     private final MessageSource messageSource;
 
     @Autowired
-    public AuthControllerAdvice(MessageSource messageSource) {
+    public ControllerAdvice(MessageSource messageSource) {
         this.messageSource = messageSource;
     }
 

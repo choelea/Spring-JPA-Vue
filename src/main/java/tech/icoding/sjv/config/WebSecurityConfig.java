@@ -33,7 +33,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-@Profile("!dev")
+@Profile("!local")
 @Configuration
 @EnableWebSecurity(debug = true)
 //@EnableJpaRepositories(basePackages = "com.accolite.pru.health.AuthApp.repository")

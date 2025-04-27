@@ -78,8 +78,8 @@ public class AuthController {
     /**
      * Checks is a given email is in use or not.
      */
-    @Operation(summary = "Checks if the given email is in use")
-    @GetMapping("/checkEmailInUse")
+//    @Operation(summary = "Checks if the given email is in use")
+//    @GetMapping("/checkEmailInUse")
     public ResponseEntity checkEmailInUse(@Param(value = "Email id to check against") @RequestParam("email") String email) {
         Boolean emailExists = authService.emailAlreadyExists(email);
         return ResponseEntity.ok(new ApiResponse(true, emailExists.toString()));
@@ -88,8 +88,8 @@ public class AuthController {
     /**
      * Checks is a given username is in use or not.
      */
-    @Operation(summary = "Checks if the given username is in use")
-    @GetMapping("/checkUsernameInUse")
+//    @Operation(summary = "Checks if the given username is in use")
+//    @GetMapping("/checkUsernameInUse")
     public ResponseEntity checkUsernameInUse(@Param(value = "Username to check against") @RequestParam(
             "username") String username) {
         Boolean usernameExists = authService.usernameAlreadyExists(username);
@@ -100,7 +100,7 @@ public class AuthController {
      * Entry point for the user log in. Return the jwt auth token and the refresh token
      */
     @PostMapping("/login")
-    @Operation(summary = "Logs the user in to the system and return the auth tokens")
+    @Operation(summary = "登录获取 token")
     public ResponseEntity authenticateUser(@Param(value = "The LoginRequest payload") @Valid @RequestBody LoginRequest loginRequest) {
 
         Authentication authentication = authService.authenticateUser(loginRequest)
@@ -123,8 +123,8 @@ public class AuthController {
      * Entry point for the user registration process. On successful registration,
      * publish an event to generate email verification token
      */
-    @PostMapping("/register")
-    @Operation(summary = "Registers the user and publishes an event to generate the email verification")
+//    @PostMapping("/register")
+//    @Operation(summary = "Registers the user and publishes an event to generate the email verification")
     public ResponseEntity registerUser(@Param(value = "The RegistrationRequest payload") @Valid @RequestBody RegistrationRequest registrationRequest) {
 
         return authService.registerUser(registrationRequest)
@@ -147,9 +147,8 @@ public class AuthController {
      * the reset link if the request is valid. In future the deeplink should open within
      * the app itself.
      */
-    @PostMapping("/password/resetlink")
-    @Operation(summary = "Receive the reset link request and publish event to send mail containing the password " +
-            "reset link")
+//    @PostMapping("/password/resetlink")
+//    @Operation(summary = "Receive the reset link request and publish event to send mail containing the password reset link")
     public ResponseEntity resetLink(@Param(value = "The PasswordResetLinkRequest payload") @Valid @RequestBody PasswordResetLinkRequest passwordResetLinkRequest) {
 
         return authService.generatePasswordResetToken(passwordResetLinkRequest)
@@ -171,9 +170,8 @@ public class AuthController {
      * changing the password to the user's mail through the event.
      */
 
-    @PostMapping("/password/reset")
-    @Operation(summary = "Reset the password after verification and publish an event to send the acknowledgement " +
-            "email")
+//    @PostMapping("/password/reset")
+//    @Operation(summary = "Reset the password after verification and publish an event to send the acknowledgement email")
     public ResponseEntity resetPassword(@Param(value = "The PasswordResetRequest payload") @Valid @RequestBody PasswordResetRequest passwordResetRequest) {
 
         return authService.resetPassword(passwordResetRequest)
@@ -192,9 +190,8 @@ public class AuthController {
      * Confirm the email verification token generated for the user during
      * registration. If token is invalid or token is expired, report error.
      */
-    @GetMapping("/registrationConfirmation")
-    @Operation(summary = "Confirms the email verification token that has been generated for the user during " +
-            "registration")
+//    @GetMapping("/registrationConfirmation")
+//    @Operation(summary = "Confirms the email verification token that has been generated for the user during registration")
     public ResponseEntity confirmRegistration(@Param(value = "the token that was sent to the user email") @RequestParam("token") String token) {
 
         return authService.confirmEmailRegistration(token)
@@ -209,11 +206,11 @@ public class AuthController {
      * any attempts at generating new token from past (possibly archived/deleted)
      * tokens should fail and report an exception.
      */
-    @GetMapping("/resendRegistrationToken")
-    @Operation(summary = "Resend the email registration with an updated token expiry. Safe to " +
-            "assume that the user would always click on the last re-verification email and " +
-            "any attempts at generating new token from past (possibly archived/deleted)" +
-            "tokens should fail and report an exception. ")
+//    @GetMapping("/resendRegistrationToken")
+//    @Operation(summary = "Resend the email registration with an updated token expiry. Safe to " +
+//            "assume that the user would always click on the last re-verification email and " +
+//            "any attempts at generating new token from past (possibly archived/deleted)" +
+//            "tokens should fail and report an exception. ")
     public ResponseEntity resendRegistrationToken(@Param(value = "the initial token that was sent to the user email " +
             "after registration") @RequestParam("token") String existingToken) {
 
@@ -237,9 +234,9 @@ public class AuthController {
      * Refresh the expired jwt token using a refresh token for the specific device
      * and return a new token to the caller
      */
-    @PostMapping("/refresh")
-    @Operation(summary = "Refresh the expired jwt authentication by issuing a token refresh request and returns the" +
-            "updated response tokens")
+//    @PostMapping("/refresh")
+//    @Operation(summary = "Refresh the expired jwt authentication by issuing a token refresh request and returns the" +
+//            "updated response tokens")
     public ResponseEntity refreshJwtToken(@Param(value = "The TokenRefreshRequest payload") @Valid @RequestBody TokenRefreshRequest tokenRefreshRequest) {
 
         return authService.refreshJwtToken(tokenRefreshRequest)
