@@ -83,4 +83,15 @@ public class ServerInfoService {
         CustomSqlServerConnector.closeConnection(connection);
         return true;
     }
+
+    /**
+     * 获取服务器上的所有数据库的名字
+     */
+    public String[] getDatabaseNames(Long id) throws SQLException {
+        ServerInfo serverInfo = repository.findById(id).get();
+        Connection connection = CustomSqlServerConnector.createConnection(serverInfo.getAddress(), serverInfo.getPort(), serverInfo.getUsername(), serverInfo.getPassword());
+        String[] databaseNames = CustomSqlServerConnector.getDatabaseNames(connection);
+        CustomSqlServerConnector.closeConnection(connection);
+        return databaseNames;
+    }
 }

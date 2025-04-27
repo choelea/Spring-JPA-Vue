@@ -8,6 +8,7 @@ import tech.icoding.sjv.model.payload.ServerInfoRequest;
 import tech.icoding.sjv.service.ServerInfoService;
 
 import javax.validation.Valid;
+import java.sql.SQLException;
 import java.util.List;
 
 @RestController
@@ -39,6 +40,11 @@ public class ServerInfoController {
     @Operation(summary = "获取指定服务器信息")
     public ServerInfo getById(@PathVariable Long id) {
         return service.findById(id);
+    }
+    @GetMapping("/{id}/_databases")
+    @Operation(summary = "获取指定服务器下面所有数据库名字")
+    public String[] getDatabases(@PathVariable Long id) throws SQLException {
+        return service.getDatabaseNames(id);
     }
 
     @DeleteMapping("/{id}")

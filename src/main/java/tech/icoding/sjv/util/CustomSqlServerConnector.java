@@ -1,9 +1,8 @@
 package tech.icoding.sjv.util;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CustomSqlServerConnector {
 
@@ -44,6 +43,24 @@ public class CustomSqlServerConnector {
     public static void disableDatabase(Connection connection, String targetDbName) {
         String sql = String.format("ALTER DATABASE [%s] SET OFFLINE WITH ROLLBACK IMMEDIATE", targetDbName);
         executeUpdate(connection, sql, "数据库 " + targetDbName + " 已被设为离线状态！", "禁用数据库失败！");
+    }
+
+    /**
+     * 从指定的连接获取数据库名列表
+     */
+    public static String[] getDatabaseNames(Connection connection) {
+        String sql = "SELECT name FROM sys.databases";
+        List<String> dbNames = new ArrayList<>();
+        try (Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                dbNames.add(rs.getString("name"));
+            }
+            return dbNames.toArray(new String[0]);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new String[0];
+        }
     }
 
     /**
