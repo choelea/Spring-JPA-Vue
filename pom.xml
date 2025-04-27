@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>tech.icoding.sjv</groupId>
-    <artifactId>AuthApp</artifactId>
+    <artifactId>Spring-JPA-Vue</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>AuthApp</name>
+    <name>Spring-JPA-Vue</name>
     <description>Demo project for Spring Boot</description>
     <url>https://github.com/choelea/Spring-JPA-Vue</url>
 

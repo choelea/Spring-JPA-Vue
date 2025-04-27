@@ -11,6 +11,7 @@ public interface ClientInfoRepository extends JpaRepository<ClientInfo, Long> {
      */
     List<ClientInfo> findByClientNameLike(String clientName);
 
+
     /**
      * 检查某个服务器是否有客户使用
      */

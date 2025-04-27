@@ -25,22 +25,24 @@ public class ClientInfoService {
     }
 
     /**
-     * 根据客户名模糊查询所有客户列表
+     * 根据客户名模糊查询所有客户列表；根据过期时间倒序排序
      * @param clientName
      * @return
      */
     public List<ClientInfo> findByClientName(String clientName) {
+        List<ClientInfo> clientInfos = null;
         if(clientName == null || clientName.isEmpty()) {
-            return findAll();
+            clientInfos = findAll();
         }
-        return repository.findByClientNameLike(clientName);
+        clientInfos = repository.findByClientNameLike(clientName);
+        clientInfos.sort((o1, o2) -> o2.getExpiryTime().compareTo(o1.getExpiryTime()));
+        return clientInfos;
     }
 
     public ClientInfo convert(ClientInfoRequest request) {
         ClientInfo clientInfo = new ClientInfo();
         clientInfo.setClientName(request.getClientName());
         clientInfo.setVersion(request.getVersion());
-        clientInfo.setPort(request.getPort());
         clientInfo.setAnnualFee(request.getAnnualFee());
         clientInfo.setExpiryTime(request.getExpiryTime());
         clientInfo.setDatabaseName(request.getDatabaseName());

@@ -30,9 +30,6 @@ public class ClientInfo {
     @Column(name = "version")
     private String version;
 
-    @Column(name = "port_number")
-    private String port;
-
     @Column(name = "annual_fee")
     private BigDecimal annualFee;
 
