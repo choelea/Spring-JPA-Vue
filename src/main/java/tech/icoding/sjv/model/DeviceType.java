@@ -15,6 +15,7 @@ package tech.icoding.sjv.model;
 
 public enum DeviceType {
 
+    DEVICE_TYPE_UNKNOWN,
     /**
      * Android device type
      */

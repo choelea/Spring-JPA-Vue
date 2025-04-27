@@ -1,11 +1,14 @@
 package tech.icoding.sjv.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "client_info")
+@Table(name = "biz_client_info")
+@Data
 public class ClientInfo {
 
     @Id
@@ -30,6 +33,9 @@ public class ClientInfo {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "server_id")
     private ServerInfo server;
+
+    @Column(name = "db_name", nullable = false)
+    private String databaseName;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")

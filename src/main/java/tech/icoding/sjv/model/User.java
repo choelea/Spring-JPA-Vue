@@ -33,13 +33,13 @@ import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity(name = "USER")
+@Entity(name = "SYS_USER")
 public class User extends DateAudit {
 
     @Id
     @Column(name = "USER_ID")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
-    @SequenceGenerator(name = "user_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sys_user_seq")
+    @SequenceGenerator(name = "sys_user_seq", allocationSize = 1)
     private Long id;
 
     @NaturalId
@@ -67,7 +67,7 @@ public class User extends DateAudit {
     private Boolean active;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "USER_AUTHORITY", joinColumns = {
+    @JoinTable(name = "SYS_USER_AUTHORITY", joinColumns = {
             @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")}, inverseJoinColumns = {
             @JoinColumn(name = "ROLE_ID", referencedColumnName = "ROLE_ID")})
     private Set<Role> roles = new HashSet<>();

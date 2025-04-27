@@ -28,13 +28,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
-@Entity(name = "USER_DEVICE")
+@Entity(name = "SYS_USER_DEVICE")
 public class UserDevice extends DateAudit {
 
     @Id
     @Column(name = "USER_DEVICE_ID")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_device_seq")
-    @SequenceGenerator(name = "user_device_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sys_user_device_seq")
+    @SequenceGenerator(name = "sys_user_device_seq", allocationSize = 1)
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)

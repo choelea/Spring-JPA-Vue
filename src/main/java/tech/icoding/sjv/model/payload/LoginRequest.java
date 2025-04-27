@@ -13,6 +13,8 @@
  */
 package tech.icoding.sjv.model.payload;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import tech.icoding.sjv.model.DeviceType;
 import tech.icoding.sjv.validation.annotation.NullOrNotBlank;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -27,6 +29,7 @@ public class LoginRequest {
 
 //    @NullOrNotBlank(message = "Login Email can be null but not blank")
 //    @Schema(name = "User registered email", required = true, allowableValues = "NonEmpty String")
+    @JsonIgnore
     private String email;
 
     @NotNull(message = "Login password cannot be blank")
@@ -36,13 +39,14 @@ public class LoginRequest {
 //    @Valid
 //    @NotNull(message = "Device info cannot be null")
 //    @Schema(name = "Device info", required = true, type = "object", allowableValues = "A valid deviceInfo object")
-    private DeviceInfo deviceInfo;
+    @JsonIgnore
+    private DeviceInfo deviceInfo = new DeviceInfo("mockDeviceId", DeviceType.DEVICE_TYPE_UNKNOWN, null);
 
-    public LoginRequest(String username, String email, String password, DeviceInfo deviceInfo) {
+    public LoginRequest(String username, String email, String password) {
         this.username = username;
         this.email = email;
         this.password = password;
-        this.deviceInfo = deviceInfo;
+        this.deviceInfo = new DeviceInfo("mockDeviceId", DeviceType.DEVICE_TYPE_UNKNOWN, null);;
     }
 
     public LoginRequest() {

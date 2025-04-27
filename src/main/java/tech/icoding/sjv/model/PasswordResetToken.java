@@ -27,13 +27,13 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import java.time.Instant;
 
-@Entity(name = "PASSWORD_RESET_TOKEN")
+@Entity(name = "SYS_PASSWORD_RESET_TOKEN")
 public class PasswordResetToken extends DateAudit {
 
     @Id
     @Column(name = "TOKEN_ID")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pwd_reset_token_seq")
-    @SequenceGenerator(name = "pwd_reset_token_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sys_pwd_reset_token_seq")
+    @SequenceGenerator(name = "sys_pwd_reset_token_seq", allocationSize = 1)
     private Long id;
 
     @NaturalId

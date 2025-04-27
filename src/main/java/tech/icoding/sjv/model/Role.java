@@ -31,7 +31,7 @@ import java.util.Set;
 /**
  * The type Role. Defines the role and the list of users who are associated with that role
  */
-@Entity(name = "ROLE")
+@Entity(name = "SYS_ROLE")
 public class Role {
 
     @Id

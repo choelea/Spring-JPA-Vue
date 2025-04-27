@@ -28,13 +28,13 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import java.time.Instant;
 
-@Entity(name = "REFRESH_TOKEN")
+@Entity(name = "SYS_REFRESH_TOKEN")
 public class RefreshToken extends DateAudit {
 
     @Id
     @Column(name = "TOKEN_ID")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "refresh_token_seq")
-    @SequenceGenerator(name = "refresh_token_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sys_refresh_token_seq")
+    @SequenceGenerator(name = "sys_refresh_token_seq", allocationSize = 1)
     private Long id;
 
     @Column(name = "TOKEN", nullable = false, unique = true)

@@ -30,13 +30,13 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import java.time.Instant;
 
-@Entity(name = "EMAIL_VERIFICATION_TOKEN")
+@Entity(name = "SYS_EMAIL_VERIFICATION_TOKEN")
 public class EmailVerificationToken extends DateAudit {
 
     @Id
     @Column(name = "TOKEN_ID")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "email_token_seq")
-    @SequenceGenerator(name = "email_token_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sys_email_token_seq")
+    @SequenceGenerator(name = "sys_email_token_seq", allocationSize = 1)
     private Long id;
 
     @Column(name = "TOKEN", nullable = false, unique = true)

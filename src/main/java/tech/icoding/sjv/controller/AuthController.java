@@ -24,6 +24,7 @@ import tech.icoding.sjv.exception.TokenRefreshException;
 import tech.icoding.sjv.exception.UserLoginException;
 import tech.icoding.sjv.exception.UserRegistrationException;
 import tech.icoding.sjv.model.CustomUserDetails;
+import tech.icoding.sjv.model.ServerInfo;
 import tech.icoding.sjv.model.payload.ApiResponse;
 import tech.icoding.sjv.model.payload.JwtAuthenticationResponse;
 import tech.icoding.sjv.model.payload.LoginRequest;
@@ -58,8 +59,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/auth")
-@Tag(name = "Authorization Rest API", description = "Defines endpoints that can be hit only when the user is not " +
-        "logged in. It's not secured by default.")
+@Tag(name = "授权 Rest API", description = " 授权相关操作")
 
 public class AuthController {
 
@@ -95,7 +95,6 @@ public class AuthController {
         Boolean usernameExists = authService.usernameAlreadyExists(username);
         return ResponseEntity.ok(new ApiResponse(true, usernameExists.toString()));
     }
-
 
     /**
      * Entry point for the user log in. Return the jwt auth token and the refresh token
