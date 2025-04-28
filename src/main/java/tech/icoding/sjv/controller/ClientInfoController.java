@@ -63,13 +63,13 @@ public class ClientInfoController {
         ClientInfo.UsageStatus usageStatusEnum = ClientInfo.UsageStatus.valueOf(usageStatus.toUpperCase());
         ClientInfo clientInfo = service.findById(id);
         clientInfo.setStatus(usageStatusEnum);
-        if(ClientInfo.UsageStatus.DISABLED.equals(usageStatus)){
+        if(ClientInfo.UsageStatus.DISABLED.equals(usageStatusEnum)){
             try {
                 serverInfoService.disableDatabase(clientInfo.getServer(), clientInfo.getDatabaseName());
             } catch (Exception e) {
                 throw new RuntimeException("禁用数据库失败", e);
             }
-        } else if(ClientInfo.UsageStatus.ENABLED.equals(usageStatus)){
+        } else if(ClientInfo.UsageStatus.ENABLED.equals(usageStatusEnum)){
             try {
                 serverInfoService.enableDatabase(clientInfo.getServer(), clientInfo.getDatabaseName());
             } catch (Exception e) {
