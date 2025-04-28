@@ -21,10 +21,6 @@ public class ClientInfoRequest {
     @NotBlank(message = "客户名称不能为空")
     private String clientName;
 
-    @Schema(description = "Port Number", example = "1433")
-    @NotNull(message = "端口不能为空")
-    private String port;
-
     @Schema(description = "Annual Fee", example = "5000.00")
     @NotNull(message = "年费不能为空")
     private BigDecimal annualFee;
