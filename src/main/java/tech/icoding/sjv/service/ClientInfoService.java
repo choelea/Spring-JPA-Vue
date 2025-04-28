@@ -43,7 +43,6 @@ public class ClientInfoService {
     public ClientInfo convert(ClientInfoRequest request) {
         ClientInfo clientInfo = new ClientInfo();
         clientInfo.setClientName(request.getClientName());
-        clientInfo.setVersion(request.getVersion());
         clientInfo.setAnnualFee(request.getAnnualFee());
         clientInfo.setExpiryTime(request.getExpiryTime());
         clientInfo.setDatabaseName(request.getDatabaseName());

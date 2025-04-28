@@ -3,6 +3,7 @@ package tech.icoding.sjv.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import tech.icoding.sjv.validation.annotation.NullOrNotBlank;
 
@@ -45,6 +46,7 @@ public class ServerInfo {
     private String password;
 
     @OneToMany(mappedBy = "server", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @EqualsAndHashCode.Exclude
     @JsonIgnore
     private Set<ClientInfo> clients = new HashSet<>();
 }
