@@ -150,7 +150,7 @@ public class ControllerAdvice {
     @ResponseStatus(HttpStatus.EXPECTATION_FAILED)
     @ResponseBody
     public ApiResponse handleBadCredentialsException(BadCredentialsException ex, WebRequest request) {
-        return new ApiResponse(false, ex.getMessage(), ex.getClass().getName(), resolvePathFromWebRequest(request));
+        return new ApiResponse(false,"账户和密码错误", ex.getClass().getName(), resolvePathFromWebRequest(request));
     }
 
     @ExceptionHandler(value = UserRegistrationException.class)
