@@ -29,11 +29,11 @@ public class ServerInfoService {
 
 
     public ServerInfo save(ServerInfo serverInfo) throws Exception {
-//        boolean validatedConnection = CustomSqlServerConnector.validateConnection(serverInfo.getAddress(),
-//                serverInfo.getPort(),
-//                serverInfo.getUsername(),
-//                serverInfo.getPassword());
-//        if(!validatedConnection) throw new BadRequestException("配置信息有误，无法链接数据库");
+        boolean validatedConnection = CustomSqlServerConnector.validateConnection(serverInfo.getAddress(),
+                serverInfo.getPort(),
+                serverInfo.getUsername(),
+                serverInfo.getPassword());
+        if(!validatedConnection) throw new BadRequestException("配置信息有误，无法链接数据库");
         return repository.save(serverInfo);
     }
 
