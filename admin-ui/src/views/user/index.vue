@@ -10,7 +10,8 @@
         @keyup.enter="handleSearch"
       />
       <el-button type="primary" icon="Search" @click="handleSearch">搜索</el-button>
-      <el-button type="primary" icon="Plus" @click="handleCreate">添加客户</el-button>
+      <el-button icon="Refresh" @click="resetTempList">重置</el-button>
+      <el-button type="success" icon="Plus" @click="handleCreate">添加客户</el-button>
     </div>
 
     <el-card shadow="never">
@@ -27,7 +28,12 @@
         <el-table-column label="客户名" prop="clientName" align="center" min-width="120" />
         <el-table-column label="服务器别名" prop="serverAlias" align="center" min-width="120" />
         <el-table-column label="数据库" prop="databaseName" align="center" min-width="120" />
-        <el-table-column label="年费" prop="annualFee" align="center" width="100"></el-table-column>
+        <el-table-column
+          label="年费（元）"
+          prop="annualFee"
+          align="center"
+          width="100"
+        ></el-table-column>
         <el-table-column label="过期时间" prop="expiryTime" align="center" min-width="160">
           <template #default="{ row }">
             {{ formatDateTime(row.expiryTime) }}
@@ -70,32 +76,18 @@
         <el-form-item label="客户名" prop="clientName">
           <el-input v-model="temp.clientName" placeholder="请输入客户名" />
         </el-form-item>
-        <el-form-item label="端口" prop="port">
-          <el-input-number
-            v-model="temp.port"
-            :min="0"
-            :max="65535"
-            placeholder="请输入端口号"
-            style="width: 180px"
-          />
-        </el-form-item>
         <el-form-item label="服务器与数据库" prop="server_database">
           <el-cascader
             v-model="temp.server_database"
+            style="width: 100%"
             :options="serverOptions"
             :props="cascaderProps"
             placeholder="请选择服务器和数据库"
             @change="handleCascaderChange"
           />
         </el-form-item>
-        <el-form-item label="年费" prop="annualFee">
-          <el-input-number
-            v-model="temp.annualFee"
-            :min="0"
-            :precision="2"
-            :step="100"
-            style="width: 180px"
-          />
+        <el-form-item label="年费（元）" prop="annualFee">
+          <el-input-number v-model="temp.annualFee" :min="0" :step="100" style="width: 180px" />
         </el-form-item>
         <el-form-item label="过期时间" prop="expiryTime">
           <el-date-picker
@@ -154,11 +146,10 @@ interface DatabaseOption {
 interface Client {
   id: number | string;
   clientName: string;
-  port: number;
   serverId: number | string;
   server_name?: string;
   databaseName: string;
-  annualFee?: number;
+  annualFee: number;
   expiryTime: string | Date;
   status: "ENABLED" | "DISABLED";
   [key: string]: any;
@@ -187,7 +178,6 @@ const dialogStatus = ref("");
 const dataFormRef = ref<FormInstance>();
 const temp = reactive<{
   id?: number | string;
-  port: number;
   clientName: string;
   serverId: number | string | null;
   databaseName: string;
@@ -198,7 +188,6 @@ const temp = reactive<{
 }>({
   id: undefined,
   clientName: "",
-  port: 0,
   serverId: null,
   databaseName: "",
   server_database: [],
@@ -210,7 +199,10 @@ const temp = reactive<{
 // 表单验证规则
 const rules = reactive<any>({
   clientName: [{ required: true, message: "客户名不能为空", trigger: "blur" }],
-  port: [{ required: true, message: "端口不能为空", trigger: "blur" }],
+  annualFee: [
+    { required: true, message: "年费不能为空", trigger: "blur" },
+    { type: "number", min: 0, message: "年费必须大于等于0", trigger: "blur" },
+  ],
   serverId: [{ required: true, message: "服务器不能为空", trigger: "change" }],
   server_database: [{ required: true, message: "服务器和数据库不能为空", trigger: "change" }],
   expiryTime: [{ required: true, message: "过期时间不能为空", trigger: "change" }],
@@ -219,6 +211,11 @@ const rules = reactive<any>({
 
 // 搜索方法
 const handleSearch = () => {
+  getList();
+};
+
+const resetTempList = () => {
+  searchQuery.value = "";
   getList();
 };
 
@@ -334,7 +331,6 @@ const createData = () => {
 
     const submitData = {
       clientName: temp.clientName,
-      port: temp.port,
       serverId: temp.serverId,
       databaseName: temp.databaseName,
       annualFee: temp.annualFee,
@@ -363,7 +359,7 @@ const createData = () => {
 const handleUpdate = (row: Client) => {
   //
   resetTemp();
-  Object.assign(temp, { ...row, port: row.server.port });
+  Object.assign(temp, { ...row });
 
   // 设置级联选择器的值
   if (row.server.id && row.databaseName) {
@@ -389,12 +385,10 @@ const updateData = () => {
     const tempData = {
       id: temp.id,
       clientName: temp.clientName,
-      port: temp.port,
       serverId: temp.server_database[0],
       databaseName: temp.server_database[1],
       annualFee: temp.annualFee,
       expiryTime: temp.expiryTime,
-      // status: temp.status,
     };
 
     if (!tempData.id) {
@@ -474,9 +468,15 @@ const handleStatusChange = (row: Client) => {
     });
 };
 
+// 编辑或者创建时，获取 loadServerWithDatabases();
+watch(dialogFormVisible, (val) => {
+  if (val) {
+    loadServerWithDatabases();
+  }
+});
+
 onMounted(() => {
   getList();
-  loadServerWithDatabases();
 });
 </script>
 

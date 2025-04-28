@@ -45,7 +45,7 @@ public class CustomSqlServerConnector {
      * @param connection 连接对象
      * @param targetDbName 要禁用的数据库名
      */
-    public void disableDatabase(Connection connection, String targetDbName) {
+    public void disableDatabase(Connection connection, String targetDbName) throws SQLException {
         String sql = String.format("ALTER DATABASE [%s] SET OFFLINE WITH ROLLBACK IMMEDIATE", targetDbName);
         executeUpdate(connection, sql, "数据库 " + targetDbName + " 已被设为离线状态！", "禁用数据库失败！");
     }
@@ -74,7 +74,7 @@ public class CustomSqlServerConnector {
      * @param connection 连接对象
      * @param targetDbName 要启用的数据库名
      */
-    public void enableDatabase(Connection connection, String targetDbName) {
+    public void enableDatabase(Connection connection, String targetDbName) throws SQLException {
         String sql = String.format("ALTER DATABASE [%s] SET ONLINE", targetDbName);
         executeUpdate(connection, sql, "数据库 " + targetDbName + " 已被设为在线状态！", "启用数据库失败！");
     }
@@ -87,14 +87,14 @@ public class CustomSqlServerConnector {
      * @param successMessage 成功时的提示信息
      * @param errorMessage 失败时的提示信息
      */
-    private  void executeUpdate(Connection connection, String sql, String successMessage, String errorMessage) {
+    private  void executeUpdate(Connection connection, String sql, String successMessage, String errorMessage) throws SQLException {
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(sql);
             log.info(successMessage);
             closeConnection(connection);
         } catch (SQLException e) {
             log.error(errorMessage);
-            e.printStackTrace();
+            throw e;
         }
     }
 }
