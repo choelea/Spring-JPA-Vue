@@ -21,11 +21,11 @@ import javax.validation.constraints.NotBlank;
 public class UpdatePasswordRequest {
 
     @NotBlank(message = "Old password must not be blank")
-    @Schema(name = "Valid current user password", required = true, allowableValues = "NonEmpty String")
+//    @Schema(name = "Valid current user password", required = true, allowableValues = "NonEmpty String")
     private String oldPassword;
 
     @NotBlank(message = "New password must not be blank")
-    @Schema(name = "Valid new password string", required = true, allowableValues = "NonEmpty String")
+//    @Schema(name = "Valid new password string", required = true, allowableValues = "NonEmpty String")
     private String newPassword;
 
     public UpdatePasswordRequest(String oldPassword, String newPassword) {
