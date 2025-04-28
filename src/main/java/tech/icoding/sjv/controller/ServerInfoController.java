@@ -43,8 +43,10 @@ public class ServerInfoController {
     }
     @GetMapping("/{id}/_databases")
     @Operation(summary = "获取指定服务器下面所有数据库名字")
-    public String[] getDatabases(@PathVariable Long id) throws SQLException {
-        return service.getDatabaseNames(id);
+    public String[] getDatabases(@PathVariable Long id) throws SQLException{
+        // Mock 一个数组返回
+        return new String[]{"test1", "test2", "test3"};
+//        return service.getDatabaseNames(id);
     }
 
     @DeleteMapping("/{id}")
