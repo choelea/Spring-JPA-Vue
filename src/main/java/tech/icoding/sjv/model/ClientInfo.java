@@ -1,5 +1,6 @@
 package tech.icoding.sjv.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -34,6 +35,7 @@ public class ClientInfo {
     private BigDecimal annualFee;
 
     @Column(name = "expiry_time")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime expiryTime;
 
     @ManyToOne(fetch = FetchType.EAGER)
