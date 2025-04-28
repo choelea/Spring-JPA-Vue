@@ -1,0 +1,1 @@
+import{d as a,an as e,am as s,g as r,f as t}from"./index.BV3E-K4p.js";const n=a({__name:"index",setup(a){const n=e(),p=s(),{params:d,query:m}=n,{path:o}=d;return p.replace({path:"/"+o,query:m}),(a,e)=>(t(),r("div"))}});export{n as default};

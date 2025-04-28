@@ -13,6 +13,7 @@
  */
 package tech.icoding.sjv.service;
 
+import org.springframework.transaction.annotation.Transactional;
 import tech.icoding.sjv.exception.PasswordResetLinkException;
 import tech.icoding.sjv.exception.ResourceAlreadyInUseException;
 import tech.icoding.sjv.exception.ResourceNotFoundException;
@@ -71,6 +72,7 @@ public class AuthService {
      *
      * @return A user object if successfully created
      */
+    @Transactional
     public Optional<User> registerUser(RegistrationRequest newRegistrationRequest) {
         String newRegistrationRequestEmail = newRegistrationRequest.getEmail();
         if (emailAlreadyExists(newRegistrationRequestEmail)) {

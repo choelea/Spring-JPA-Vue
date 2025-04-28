@@ -13,6 +13,7 @@
  */
 package tech.icoding.sjv.service;
 
+import org.springframework.transaction.annotation.Transactional;
 import tech.icoding.sjv.annotation.CurrentUser;
 import tech.icoding.sjv.exception.UserLogoutException;
 import tech.icoding.sjv.model.CustomUserDetails;

@@ -1,0 +1,40 @@
+@use "./reset";
+@use "./global" as *;
+
+.app-container {
+  padding: 15px;
+  min-height: calc(100vh - 50px);
+}
+
+.search-bar {
+  padding: 18px 0 0 10px;
+  margin-bottom: 10px;
+  background-color: var(--el-bg-color-overlay);
+  border: 1px solid var(--el-border-color-light);
+  border-radius: 4px;
+  // box-shadow: var(--el-box-shadow-light);
+}
+
+.table-container > .el-card__header {
+  padding: calc(var(--el-card-padding) - 8px) var(--el-card-padding);
+}
+
+.link-type,
+.link-type:focus {
+  color: #337ab7;
+  cursor: pointer;
+
+  &:hover {
+    color: rgb(32 160 255);
+  }
+}
+.single-line-text {
+  @include text-ellipsis(1);
+}
+.two-line-text {
+  @include text-ellipsis(2);
+}
+
+.multi-line-text {
+  @include text-ellipsis(3);
+}

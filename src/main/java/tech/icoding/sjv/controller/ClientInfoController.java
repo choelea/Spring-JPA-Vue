@@ -63,19 +63,19 @@ public class ClientInfoController {
         ClientInfo.UsageStatus usageStatusEnum = ClientInfo.UsageStatus.valueOf(usageStatus.toUpperCase());
         ClientInfo clientInfo = service.findById(id);
         clientInfo.setStatus(usageStatusEnum);
-//        if(ClientInfo.UsageStatus.DISABLED.equals(usageStatus)){
-//            try {
-//                serverInfoService.disableDatabase(clientInfo.getServer(), clientInfo.getDatabaseName());
-//            } catch (Exception e) {
-//                throw new RuntimeException("禁用数据库失败", e);
-//            }
-//        } else if(ClientInfo.UsageStatus.ENABLED.equals(usageStatus)){
-//            try {
-//                serverInfoService.enableDatabase(clientInfo.getServer(), clientInfo.getDatabaseName());
-//            } catch (Exception e) {
-//                throw new RuntimeException("启用数据库失败", e);
-//            }
-//        }
+        if(ClientInfo.UsageStatus.DISABLED.equals(usageStatus)){
+            try {
+                serverInfoService.disableDatabase(clientInfo.getServer(), clientInfo.getDatabaseName());
+            } catch (Exception e) {
+                throw new RuntimeException("禁用数据库失败", e);
+            }
+        } else if(ClientInfo.UsageStatus.ENABLED.equals(usageStatus)){
+            try {
+                serverInfoService.enableDatabase(clientInfo.getServer(), clientInfo.getDatabaseName());
+            } catch (Exception e) {
+                throw new RuntimeException("启用数据库失败", e);
+            }
+        }
         return service.save(clientInfo); // 调用服务层保存更新后的对象
     }
 
