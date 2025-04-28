@@ -59,9 +59,10 @@ public class ClientInfoController {
 
     @PutMapping("/{id}/status")
     @Operation(summary = "禁用和启用客户：ENABLED / DISABLED")
-    public ClientInfo updateStatus(@PathVariable Long id, @RequestParam ClientInfo.UsageStatus usageStatus) {
+    public ClientInfo updateStatus(@PathVariable Long id, @RequestParam String usageStatus) {
+        ClientInfo.UsageStatus usageStatusEnum = ClientInfo.UsageStatus.valueOf(usageStatus.toUpperCase());
         ClientInfo clientInfo = service.findById(id);
-        clientInfo.setStatus(usageStatus);
+        clientInfo.setStatus(usageStatusEnum);
 //        if(ClientInfo.UsageStatus.DISABLED.equals(usageStatus)){
 //            try {
 //                serverInfoService.disableDatabase(clientInfo.getServer(), clientInfo.getDatabaseName());

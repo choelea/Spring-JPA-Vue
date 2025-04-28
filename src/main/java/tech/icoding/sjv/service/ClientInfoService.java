@@ -33,8 +33,9 @@ public class ClientInfoService {
         List<ClientInfo> clientInfos = null;
         if(clientName == null || clientName.isEmpty()) {
             clientInfos = findAll();
+        }else{
+            clientInfos = repository.findByClientNameLike(clientName);
         }
-        clientInfos = repository.findByClientNameLike(clientName);
         clientInfos.sort((o1, o2) -> o2.getExpiryTime().compareTo(o1.getExpiryTime()));
         return clientInfos;
     }
