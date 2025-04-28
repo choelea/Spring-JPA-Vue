@@ -13,6 +13,7 @@
  */
 package tech.icoding.sjv.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 import tech.icoding.sjv.annotation.CurrentUser;
 import tech.icoding.sjv.exception.UserLogoutException;
@@ -23,7 +24,7 @@ import tech.icoding.sjv.model.UserDevice;
 import tech.icoding.sjv.model.payload.LogOutRequest;
 import tech.icoding.sjv.model.payload.RegistrationRequest;
 import tech.icoding.sjv.repository.UserRepository;
-import org.apache.log4j.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -33,9 +34,9 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
+@Slf4j
 public class UserService {
 
-    private static final Logger logger = Logger.getLogger(UserService.class);
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final RoleService roleService;
@@ -119,7 +120,7 @@ public class UserService {
         if (!isToBeMadeAdmin) {
             newUserRoles.removeIf(Role::isAdminRole);
         }
-        logger.info("Setting user roles: " + newUserRoles);
+        log.info("Setting user roles: " + newUserRoles);
         return newUserRoles;
     }
 
@@ -133,7 +134,7 @@ public class UserService {
                 .filter(device -> device.getDeviceId().equals(deviceId))
                 .orElseThrow(() -> new UserLogoutException(logOutRequest.getDeviceInfo().getDeviceId(), "Invalid device Id supplied. No matching device found for the given user "));
 
-        logger.info("Removing refresh token associated with device [" + userDevice + "]");
+        log.info("Removing refresh token associated with device [" + userDevice + "]");
         refreshTokenService.deleteById(userDevice.getRefreshToken().getId());
     }
 }

@@ -17,10 +17,12 @@ public class ServerInfoService {
 
     private final ServerInfoRepository repository;
     private final ClientInfoRepository clientInfoRepository;
+    private final CustomSqlServerConnector customSqlServerConnector;
 
-    public ServerInfoService(ServerInfoRepository repository, ClientInfoRepository clientInfoRepository) {
+    public ServerInfoService(ServerInfoRepository repository, ClientInfoRepository clientInfoRepository, CustomSqlServerConnector customSqlServerConnector) {
         this.repository = repository;
         this.clientInfoRepository = clientInfoRepository;
+        this.customSqlServerConnector = customSqlServerConnector;
     }
 
     public List<ServerInfo> findAll() {
@@ -29,7 +31,7 @@ public class ServerInfoService {
 
 
     public ServerInfo save(ServerInfo serverInfo) throws Exception {
-        boolean validatedConnection = CustomSqlServerConnector.validateConnection(serverInfo.getAddress(),
+        boolean validatedConnection = customSqlServerConnector.validateConnection(serverInfo.getAddress(),
                 serverInfo.getPort(),
                 serverInfo.getUsername(),
                 serverInfo.getPassword());
@@ -62,10 +64,10 @@ public class ServerInfoService {
      */
     public Boolean disableDatabase(ServerInfo serverInfo, String dataBaseName) throws SQLException {
 
-        Connection connection = CustomSqlServerConnector.createConnection(serverInfo.getAddress(), serverInfo.getPort(), serverInfo.getUsername(), serverInfo.getPassword());
+        Connection connection = customSqlServerConnector.createConnection(serverInfo.getAddress(), serverInfo.getPort(), serverInfo.getUsername(), serverInfo.getPassword());
 
-        CustomSqlServerConnector.disableDatabase(connection,dataBaseName);
-        CustomSqlServerConnector.closeConnection(connection);
+        customSqlServerConnector.disableDatabase(connection,dataBaseName);
+        customSqlServerConnector.closeConnection(connection);
         return true;
     }
 
@@ -77,9 +79,9 @@ public class ServerInfoService {
      * @throws SQLException
      */
     public Boolean enableDatabase(ServerInfo serverInfo, String dataBaseName) throws SQLException {
-        Connection connection = CustomSqlServerConnector.createConnection(serverInfo.getAddress(), serverInfo.getPort(), serverInfo.getUsername(), serverInfo.getPassword());
-        CustomSqlServerConnector.enableDatabase(connection, dataBaseName);
-        CustomSqlServerConnector.closeConnection(connection);
+        Connection connection = customSqlServerConnector.createConnection(serverInfo.getAddress(), serverInfo.getPort(), serverInfo.getUsername(), serverInfo.getPassword());
+        customSqlServerConnector.enableDatabase(connection, dataBaseName);
+        customSqlServerConnector.closeConnection(connection);
         return true;
     }
 
@@ -88,9 +90,9 @@ public class ServerInfoService {
      */
     public String[] getDatabaseNames(Long id) throws SQLException {
         ServerInfo serverInfo = repository.findById(id).get();
-        Connection connection = CustomSqlServerConnector.createConnection(serverInfo.getAddress(), serverInfo.getPort(), serverInfo.getUsername(), serverInfo.getPassword());
-        String[] databaseNames = CustomSqlServerConnector.getDatabaseNames(connection);
-        CustomSqlServerConnector.closeConnection(connection);
+        Connection connection = customSqlServerConnector.createConnection(serverInfo.getAddress(), serverInfo.getPort(), serverInfo.getUsername(), serverInfo.getPassword());
+        String[] databaseNames = customSqlServerConnector.getDatabaseNames(connection);
+        customSqlServerConnector.closeConnection(connection);
         return databaseNames;
     }
 }

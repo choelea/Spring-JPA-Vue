@@ -13,10 +13,10 @@
  */
 package tech.icoding.sjv.cache;
 
+import lombok.extern.slf4j.Slf4j;
 import tech.icoding.sjv.event.OnUserLogoutSuccessEvent;
 import tech.icoding.sjv.security.JwtTokenProvider;
 import net.jodah.expiringmap.ExpiringMap;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -35,9 +35,8 @@ import java.util.concurrent.TimeUnit;
  * as once a JWT token expires, it cannot be used anyway.
  */
 @Component
+@Slf4j
 public class LoggedOutJwtTokenCache {
-
-    private static final Logger logger = Logger.getLogger(LoggedOutJwtTokenCache.class);
 
     private final ExpiringMap<String, OnUserLogoutSuccessEvent> tokenEventMap;
     private final JwtTokenProvider tokenProvider;
@@ -54,12 +53,12 @@ public class LoggedOutJwtTokenCache {
     public void markLogoutEventForToken(OnUserLogoutSuccessEvent event) {
         String token = event.getToken();
         if (tokenEventMap.containsKey(token)) {
-            logger.info(String.format("Log out token for user [%s] is already present in the cache", event.getUserEmail()));
+            log.info(String.format("Log out token for user [%s] is already present in the cache", event.getUserEmail()));
 
         } else {
             Date tokenExpiryDate = tokenProvider.getTokenExpiryFromJWT(token);
             long ttlForToken = getTTLForToken(tokenExpiryDate);
-            logger.info(String.format("Logout token cache set for [%s] with a TTL of [%s] seconds. Token is due expiry at [%s]", event.getUserEmail(), ttlForToken, tokenExpiryDate));
+            log.info(String.format("Logout token cache set for [%s] with a TTL of [%s] seconds. Token is due expiry at [%s]", event.getUserEmail(), ttlForToken, tokenExpiryDate));
             tokenEventMap.put(token, event, ttlForToken, TimeUnit.SECONDS);
         }
     }

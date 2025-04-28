@@ -13,8 +13,9 @@
  */
 package tech.icoding.sjv.security;
 
+import lombok.extern.slf4j.Slf4j;
 import tech.icoding.sjv.service.CustomUserDetailsService;
-import org.apache.log4j.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -32,10 +33,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-
+@Slf4j
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    private static final Logger log = Logger.getLogger(JwtAuthenticationFilter.class);
 
     @Value("${app.jwt.header}")
     private String tokenRequestHeader;

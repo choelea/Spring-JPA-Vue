@@ -13,6 +13,7 @@
  */
 package tech.icoding.sjv.advice;
 
+import lombok.extern.slf4j.Slf4j;
 import tech.icoding.sjv.exception.AppException;
 import tech.icoding.sjv.exception.BadRequestException;
 import tech.icoding.sjv.exception.InvalidTokenRequestException;
@@ -27,7 +28,7 @@ import tech.icoding.sjv.exception.UserLoginException;
 import tech.icoding.sjv.exception.UserLogoutException;
 import tech.icoding.sjv.exception.UserRegistrationException;
 import tech.icoding.sjv.model.payload.ApiResponse;
-import org.apache.log4j.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -49,9 +50,9 @@ import java.util.Locale;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice
+@Slf4j
 public class ControllerAdvice {
 
-    private static final Logger logger = Logger.getLogger(ControllerAdvice.class);
 
     private final MessageSource messageSource;
 
@@ -91,7 +92,7 @@ public class ControllerAdvice {
     private String resolveLocalizedErrorMessage(ObjectError objectError) {
         Locale currentLocale = LocaleContextHolder.getLocale();
         String localizedErrorMessage = messageSource.getMessage(objectError, currentLocale);
-        logger.info(localizedErrorMessage);
+        log.info(localizedErrorMessage);
         return localizedErrorMessage;
     }
 

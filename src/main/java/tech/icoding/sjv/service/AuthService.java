@@ -13,6 +13,7 @@
  */
 package tech.icoding.sjv.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 import tech.icoding.sjv.exception.PasswordResetLinkException;
 import tech.icoding.sjv.exception.ResourceAlreadyInUseException;
@@ -32,7 +33,7 @@ import tech.icoding.sjv.model.payload.UpdatePasswordRequest;
 import tech.icoding.sjv.model.token.EmailVerificationToken;
 import tech.icoding.sjv.model.token.RefreshToken;
 import tech.icoding.sjv.security.JwtTokenProvider;
-import org.apache.log4j.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -43,9 +44,9 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class AuthService {
 
-    private static final Logger logger = Logger.getLogger(AuthService.class);
     private final UserService userService;
     private final JwtTokenProvider tokenProvider;
     private final RefreshTokenService refreshTokenService;
@@ -76,10 +77,10 @@ public class AuthService {
     public Optional<User> registerUser(RegistrationRequest newRegistrationRequest) {
         String newRegistrationRequestEmail = newRegistrationRequest.getEmail();
         if (emailAlreadyExists(newRegistrationRequestEmail)) {
-            logger.error("Email already exists: " + newRegistrationRequestEmail);
+            log.error("Email already exists: " + newRegistrationRequestEmail);
             throw new ResourceAlreadyInUseException("Email", "Address", newRegistrationRequestEmail);
         }
-        logger.info("Trying to register new user [" + newRegistrationRequestEmail + "]");
+        log.info("Trying to register new user [" + newRegistrationRequestEmail + "]");
         User newUser = userService.createUser(newRegistrationRequest);
         User registeredNewUser = userService.save(newUser);
         return Optional.ofNullable(registeredNewUser);
@@ -124,7 +125,7 @@ public class AuthService {
 
         User registeredUser = emailVerificationToken.getUser();
         if (registeredUser.getEmailVerified()) {
-            logger.info("User [" + emailToken + "] already registered.");
+            log.info("User [" + emailToken + "] already registered.");
             return Optional.of(registeredUser);
         }
 
@@ -169,7 +170,7 @@ public class AuthService {
                 .orElseThrow(() -> new UpdatePasswordException(email, "No matching user found"));
 
         if (!currentPasswordMatches(currentUser, updatePasswordRequest.getOldPassword())) {
-            logger.info("Current password is invalid for [" + currentUser.getPassword() + "]");
+            log.info("Current password is invalid for [" + currentUser.getPassword() + "]");
             throw new UpdatePasswordException(currentUser.getEmail(), "Invalid current password");
         }
         String newPassword = passwordEncoder.encode(updatePasswordRequest.getNewPassword());

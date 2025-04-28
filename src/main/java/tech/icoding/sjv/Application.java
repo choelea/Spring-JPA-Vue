@@ -13,7 +13,7 @@
  */
 package tech.icoding.sjv;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -26,9 +26,8 @@ import java.net.UnknownHostException;
 import java.util.Optional;
 
 @SpringBootApplication
-//@EntityScan(basePackageClasses = {Application.class, Jsr310JpaConverters.class})
+@Slf4j
 public class Application {
-    private static final Logger logger = Logger.getLogger(Application.class);
     public static void main(String[] args) throws UnknownHostException {
 
         final ConfigurableApplicationContext application = SpringApplication.run(Application.class, args);
@@ -38,7 +37,7 @@ public class Application {
         String port = Optional.ofNullable(env.getProperty("server.port")).orElse("8080");
         String path = Optional.ofNullable(env.getProperty("server.servlet.context-path")).orElse("");
         String serviceName = Optional.ofNullable(env.getProperty("spring.application.name")).orElse("Spring Boot Application");
-        logger.info("\n----------------------------------------------------------\n\t" +
+        log.info("\n----------------------------------------------------------\n\t" +
                 "Service:" + serviceName + " is running! Access URLs:\n\t" +
                 "Local: \t\thttp://localhost:" + port + path + "/\n\t" +
                 "External: \thttp://" + ip + ":" + port + path + "/\n\t" +

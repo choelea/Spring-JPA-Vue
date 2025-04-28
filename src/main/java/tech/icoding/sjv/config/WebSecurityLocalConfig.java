@@ -13,7 +13,8 @@
  */
 package tech.icoding.sjv.config;
 
-import org.apache.log4j.Logger;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -26,13 +27,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Configuration
 @EnableWebSecurity(debug = true)
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+@Slf4j
 public class WebSecurityLocalConfig extends WebSecurityConfigurerAdapter {
 
-    private static final Logger logger = Logger.getLogger(WebSecurityLocalConfig.class);
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        logger.info("Loaded inside a dev only");
+        log.info("Loaded inside a dev only");
         http.authorizeRequests()
                 .anyRequest().permitAll();
     }

@@ -13,13 +13,14 @@
  */
 package tech.icoding.sjv.event.listener;
 
+import lombok.extern.slf4j.Slf4j;
 import tech.icoding.sjv.event.OnRegenerateEmailVerificationEvent;
 import tech.icoding.sjv.exception.MailSendException;
 import tech.icoding.sjv.model.User;
 import tech.icoding.sjv.model.token.EmailVerificationToken;
 import tech.icoding.sjv.service.MailService;
 import freemarker.template.TemplateException;
-import org.apache.log4j.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.scheduling.annotation.Async;
@@ -29,9 +30,9 @@ import javax.mail.MessagingException;
 import java.io.IOException;
 
 @Component
+@Slf4j
 public class OnRegenerateEmailVerificationListener implements ApplicationListener<OnRegenerateEmailVerificationEvent> {
 
-    private static final Logger logger = Logger.getLogger(OnRegenerateEmailVerificationListener.class);
     private final MailService mailService;
 
     @Autowired
@@ -61,7 +62,7 @@ public class OnRegenerateEmailVerificationListener implements ApplicationListene
         try {
             mailService.sendEmailVerification(emailConfirmationUrl, recipientAddress);
         } catch (IOException | TemplateException | MessagingException e) {
-            logger.error(e);
+            log.error(e.getMessage(),e);
             throw new MailSendException(recipientAddress, "Email Verification");
         }
     }

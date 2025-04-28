@@ -13,10 +13,10 @@
  */
 package tech.icoding.sjv.service;
 
+import lombok.extern.slf4j.Slf4j;
 import tech.icoding.sjv.model.CustomUserDetails;
 import tech.icoding.sjv.model.User;
 import tech.icoding.sjv.repository.UserRepository;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -26,9 +26,9 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private static final Logger logger = Logger.getLogger(CustomUserDetailsService.class);
     private final UserRepository userRepository;
 
     @Autowired
@@ -40,14 +40,14 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 //        Optional<User> dbUser = userRepository.findByEmail(email);
         Optional<User> dbUser = userRepository.findByUsername(email);
-        logger.info("Fetched user : " + dbUser + " by " + email);
+        log.info("Fetched user : " + dbUser + " by " + email);
         return dbUser.map(CustomUserDetails::new)
                 .orElseThrow(() -> new UsernameNotFoundException("Couldn't find a matching user email in the database for " + email));
     }
 
     public UserDetails loadUserById(Long id) {
         Optional<User> dbUser = userRepository.findById(id);
-        logger.info("Fetched user : " + dbUser + " by " + id);
+        log.info("Fetched user : " + dbUser + " by " + id);
         return dbUser.map(CustomUserDetails::new)
                 .orElseThrow(() -> new UsernameNotFoundException("Couldn't find a matching user id in the database for " + id));
     }

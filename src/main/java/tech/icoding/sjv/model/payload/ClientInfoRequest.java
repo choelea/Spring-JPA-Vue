@@ -1,5 +1,6 @@
 package tech.icoding.sjv.model.payload;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import tech.icoding.sjv.model.ClientInfo;
@@ -30,6 +31,7 @@ public class ClientInfoRequest {
 
     @Schema(description = "Expiry Time", example = "2025-04-27 10:10:00")
     @NotNull(message = "到期时间不能为空")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime expiryTime;
 
     @Schema(description = "Server ID")

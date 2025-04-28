@@ -13,6 +13,7 @@
  */
 package tech.icoding.sjv.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import tech.icoding.sjv.annotation.CurrentUser;
 import tech.icoding.sjv.event.OnUserAccountChangeEvent;
 import tech.icoding.sjv.event.OnUserLogoutSuccessEvent;
@@ -25,7 +26,7 @@ import tech.icoding.sjv.service.AuthService;
 import tech.icoding.sjv.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.apache.log4j.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.repository.query.Param;
@@ -40,12 +41,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
+@Slf4j
 //@RestController
 //@RequestMapping("/api/user")
 //@Tag(name = "User Rest API", description = "Defines endpoints for the logged in user. It's secured by default")
 public class UserController {
-
-    private static final Logger logger = Logger.getLogger(UserController.class);
 
     private final AuthService authService;
 
@@ -67,7 +67,7 @@ public class UserController {
     @PreAuthorize("hasRole('USER')")
     @Operation(summary = "Returns the current user profile")
     public ResponseEntity getUserProfile(@CurrentUser CustomUserDetails currentUser) {
-        logger.info(currentUser.getEmail() + " has role: " + currentUser.getRoles());
+        log.info(currentUser.getEmail() + " has role: " + currentUser.getRoles());
         return ResponseEntity.ok("Hello. This is about me");
     }
 
@@ -78,7 +78,7 @@ public class UserController {
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Returns the list of configured admins. Requires ADMIN Access")
     public ResponseEntity getAllAdmins() {
-        logger.info("Inside secured resource with admin");
+        log.info("Inside secured resource with admin");
         return ResponseEntity.ok("Hello. This is about admins");
     }
 

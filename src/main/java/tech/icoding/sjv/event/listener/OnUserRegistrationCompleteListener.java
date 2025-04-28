@@ -13,13 +13,14 @@
  */
 package tech.icoding.sjv.event.listener;
 
+import lombok.extern.slf4j.Slf4j;
 import tech.icoding.sjv.event.OnUserRegistrationCompleteEvent;
 import tech.icoding.sjv.exception.MailSendException;
 import tech.icoding.sjv.model.User;
 import tech.icoding.sjv.service.EmailVerificationTokenService;
 import tech.icoding.sjv.service.MailService;
 import freemarker.template.TemplateException;
-import org.apache.log4j.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.scheduling.annotation.Async;
@@ -29,9 +30,9 @@ import javax.mail.MessagingException;
 import java.io.IOException;
 
 @Component
+@Slf4j
 public class OnUserRegistrationCompleteListener implements ApplicationListener<OnUserRegistrationCompleteEvent> {
 
-    private static final Logger logger = Logger.getLogger(OnUserRegistrationCompleteListener.class);
     private final EmailVerificationTokenService emailVerificationTokenService;
     private final MailService mailService;
 
@@ -49,7 +50,7 @@ public class OnUserRegistrationCompleteListener implements ApplicationListener<O
     @Async
     public void onApplicationEvent(OnUserRegistrationCompleteEvent onUserRegistrationCompleteEvent) {
         //TODO 需要设置 SMTP 来发送邮件
-        logger.info("Sending email verification to the user");
+        log.info("Sending email verification to the user");
         //sendEmailVerification(onUserRegistrationCompleteEvent);
     }
 
@@ -67,7 +68,7 @@ public class OnUserRegistrationCompleteListener implements ApplicationListener<O
         try {
             mailService.sendEmailVerification(emailConfirmationUrl, recipientAddress);
         } catch (IOException | TemplateException | MessagingException e) {
-            logger.error(e);
+            log.error(e.getMessage(),e);
             throw new MailSendException(recipientAddress, "Email Verification");
         }
     }

@@ -35,7 +35,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Profile("!local")
 @Configuration
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity
 //@EnableJpaRepositories(basePackages = "com.accolite.pru.health.AuthApp.repository")
 @EnableGlobalMethodSecurity(
         securedEnabled = true,
