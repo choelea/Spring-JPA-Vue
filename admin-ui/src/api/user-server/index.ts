@@ -106,3 +106,11 @@ export function createClient(data: any) {
     data,
   });
 }
+// 修改密码
+export function updateClientPassword(data: any) {
+  return request({
+    url: `/api/user/password/update`,
+    method: "POST",
+    data,
+  });
+}

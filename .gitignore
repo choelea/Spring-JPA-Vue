@@ -24,3 +24,24 @@
 /nbdist/
 /.nb-gradle/.mvn
 /src/main/resources/application-dev.properties
+
+node_modules
+.DS_Store
+dist
+dist-ssr
+*.local
+.history
+
+# Editor directories and files
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.local
+
+stats.html
+pnpm-lock.yaml
+package-lock.json
+*.tar
+*.zip

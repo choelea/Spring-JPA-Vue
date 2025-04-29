@@ -25,9 +25,9 @@
       </div>
       <template #dropdown>
         <el-dropdown-menu>
-          <!-- <el-dropdown-item @click="handleProfileClick">
+          <el-dropdown-item @click="handleProfileClick">
             {{ $t("navbar.profile") }}
-          </el-dropdown-item> -->
+          </el-dropdown-item>
           <el-dropdown-item divided @click="logout">退出登录</el-dropdown-item>
         </el-dropdown-menu>
       </template>
@@ -56,9 +56,9 @@ const isDesktop = computed(() => appStore.device === DeviceEnum.DESKTOP);
 /**
  * 打开个人中心页面
  */
-// function handleProfileClick() {
-//   router.push({ name: "Profile" });
-// }
+function handleProfileClick() {
+  router.push({ name: "Profile" });
+}
 
 /**
  * 注销登出
