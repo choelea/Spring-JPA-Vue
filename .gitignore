@@ -45,3 +45,4 @@ pnpm-lock.yaml
 package-lock.json
 *.tar
 *.zip
+/src/main/resources/static/admin/
