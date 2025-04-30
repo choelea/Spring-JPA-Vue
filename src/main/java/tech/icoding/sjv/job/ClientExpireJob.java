@@ -35,7 +35,7 @@ public class ClientExpireJob {
     /**
      * 每天早上5点执行
      */
-    @Scheduled(cron = "0 30 22 * * ?")
+    @Scheduled(cron = "${task.client-check.cron}")
     public void executeTask() {
         log.info("*********************检查过期客户信息开始*********************");
         List<ClientInfo> byClientName = clientInfoRepository.findByExpiryTimeLessThanEqual(LocalDateTime.now());
