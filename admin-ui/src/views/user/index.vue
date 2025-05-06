@@ -83,6 +83,7 @@
             :options="serverOptions"
             :props="cascaderProps"
             placeholder="请选择服务器和数据库"
+            filterable
             @change="handleCascaderChange"
           />
         </el-form-item>
