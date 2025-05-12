@@ -13,7 +13,7 @@ public class CustomSqlServerConnector {
 
     public Connection createConnection(String ip, int port, String username, String password) throws SQLException {
         DriverManager.setLoginTimeout(5);
-        String url = String.format("jdbc:sqlserver://%s:%d;databaseName=master;encrypt=false;trustServerCertificate=true", ip, port);
+        String url = String.format("jdbc:sqlserver://%s:%d;databaseName=master;encrypt=false;trustServerCertificate=true;applicationName=A_CUSTOMER", ip, port);
         return DriverManager.getConnection(url, username, password);
     }
 

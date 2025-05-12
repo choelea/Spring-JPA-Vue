@@ -47,3 +47,4 @@ package-lock.json
 *.zip
 /src/main/resources/static/admin/
 /app.log
+/logs/
